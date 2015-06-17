@@ -1,0 +1,259 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D5070BF78E2E967AC20BB874 /* node-sdl2.cc in Sources */ = {isa = PBXBuildFile; fileRef = 13ADEBBE7B4A704FC5599CF7 /* node-sdl2.cc */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		13ADEBBE7B4A704FC5599CF7 /* node-sdl2.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "node-sdl2.cc"; sourceTree = "<group>"; };
+		13CC7F35937F47CA5CCDE050 /* libnode-sdl2-osx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libnode-sdl2-osx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6472ED17968753895073441E /* node-sdl2.gyp */ = {isa = PBXFileReference; explicitFileType = sourcecode; path = "node-sdl2.gyp"; sourceTree = "<group>"; };
+		9EC0541DEF75FC983FE778B4 /* node-sdl2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "node-sdl2.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F8826B05BA53362BCE6D2CA8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5C1CCFBB901A240D83ADE23A /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				13ADEBBE7B4A704FC5599CF7 /* node-sdl2.cc */,
+				9EC0541DEF75FC983FE778B4 /* node-sdl2.h */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		7E99FC13AEE7BFAF3D9BCA7A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				13CC7F35937F47CA5CCDE050 /* libnode-sdl2-osx.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B5BA59CD96BF56095212F643 /* Build */ = {
+			isa = PBXGroup;
+			children = (
+				6472ED17968753895073441E /* node-sdl2.gyp */,
+			);
+			name = Build;
+			sourceTree = "<group>";
+		};
+		BC0CD88175D3AAF42B775A58 = {
+			isa = PBXGroup;
+			children = (
+				5C1CCFBB901A240D83ADE23A /* Source */,
+				7E99FC13AEE7BFAF3D9BCA7A /* Products */,
+				B5BA59CD96BF56095212F643 /* Build */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		14F778D5F0EC406951C77567 /* libnode-sdl2-osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 99323D7D621B407945AF5C6B /* Build configuration list for PBXNativeTarget "libnode-sdl2-osx" */;
+			buildPhases = (
+				EBFF426C8B2AD68B7B9291E3 /* Sources */,
+				F8826B05BA53362BCE6D2CA8 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libnode-sdl2-osx";
+			productName = "node-sdl2-osx";
+			productReference = 13CC7F35937F47CA5CCDE050 /* libnode-sdl2-osx.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3580B59EBE0D4338A992F97C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+			};
+			buildConfigurationList = 6B637EF8AEE14564C02A4103 /* Build configuration list for PBXProject "node-sdl2" */;
+			compatibilityVersion = "Xcode 3.2";
+			hasScannedForEncodings = 1;
+			mainGroup = BC0CD88175D3AAF42B775A58;
+			projectDirPath = ..;
+			projectRoot = "";
+			targets = (
+				14F778D5F0EC406951C77567 /* libnode-sdl2-osx */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EBFF426C8B2AD68B7B9291E3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D5070BF78E2E967AC20BB874 /* node-sdl2.cc in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		11ED1ECEB5C767909AF7972E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_CW_ASM_SYNTAX = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					__POSIX__,
+					_LARGEFILE_SOURCE,
+					_LARGEFILE64_SOURCE,
+					"_FILE_OFFSET_BITS=64",
+					"_DARWIN_USE_64_BIT_INODE=1",
+					"NODE_WANT_INTERNALS=1",
+					"NDEBUG=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_THREADSAFE_STATICS = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				HEADER_SEARCH_PATHS = (
+					.,
+					../nan,
+					../../node/src,
+					../../node/deps/uv/include,
+					../../node/deps/v8/include,
+					"../../node/deps/debugger-agent/include",
+					../../node/deps/cares/include,
+					../../SDL2/include,
+				);
+				"OTHER_CFLAGS[arch=arm64]" = "-marm";
+				"OTHER_CFLAGS[arch=armv7]" = "-marm";
+				"OTHER_CFLAGS[arch=armv7s]" = "-marm";
+				PREBINDING = NO;
+				PRODUCT_NAME = "node-sdl2-osx";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wendif-labels",
+					"-W",
+					"-Wno-unused-parameter",
+				);
+			};
+			name = Release;
+		};
+		54BCDCFBC22905E13E1A84E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SDKROOT = macosx;
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+				USE_HEADERMAP = NO;
+			};
+			name = Release;
+		};
+		757C826900E716166FCD4D84 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				GCC_CW_ASM_SYNTAX = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					__POSIX__,
+					_LARGEFILE_SOURCE,
+					_LARGEFILE64_SOURCE,
+					"_FILE_OFFSET_BITS=64",
+					"_DARWIN_USE_64_BIT_INODE=1",
+					"NODE_WANT_INTERNALS=1",
+					_DEBUG,
+					"DEBUG=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_THREADSAFE_STATICS = NO;
+				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = YES;
+				HEADER_SEARCH_PATHS = (
+					.,
+					../nan,
+					../../node/src,
+					../../node/deps/uv/include,
+					../../node/deps/v8/include,
+					"../../node/deps/debugger-agent/include",
+					../../node/deps/cares/include,
+					../../SDL2/include,
+				);
+				"OTHER_CFLAGS[arch=arm64]" = "-marm";
+				"OTHER_CFLAGS[arch=armv7]" = "-marm";
+				"OTHER_CFLAGS[arch=armv7s]" = "-marm";
+				PREBINDING = NO;
+				PRODUCT_NAME = "node-sdl2-osx";
+				WARNING_CFLAGS = (
+					"-Wall",
+					"-Wendif-labels",
+					"-W",
+					"-Wno-unused-parameter",
+				);
+			};
+			name = Debug;
+		};
+		E9F09DB1684A1ABC8665250B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SDKROOT = macosx;
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+				USE_HEADERMAP = NO;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6B637EF8AEE14564C02A4103 /* Build configuration list for PBXProject "node-sdl2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E9F09DB1684A1ABC8665250B /* Debug */,
+				54BCDCFBC22905E13E1A84E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Debug;
+		};
+		99323D7D621B407945AF5C6B /* Build configuration list for PBXNativeTarget "libnode-sdl2-osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				757C826900E716166FCD4D84 /* Debug */,
+				11ED1ECEB5C767909AF7972E /* Release */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3580B59EBE0D4338A992F97C /* Project object */;
+}
