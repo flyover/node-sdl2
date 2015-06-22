@@ -40,7 +40,7 @@
                         'copies':
                         [
                             {
-                                'destination': "${USERPROFILE}/bin",
+                                'destination': "<!(echo %USERPROFILE%)/bin",
                                 'files': [ "$(SDL2_ROOT)/lib/x64/SDL2.dll" ]
                             }
                         ]
