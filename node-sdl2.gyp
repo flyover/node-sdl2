@@ -1,8 +1,8 @@
 {
     'variables': {
         'OS%': 'ios',
-        'NODE_PATH': '../../node',
-        'SDL2_PATH': '../../SDL2',
+        'NODE_PATH': '../../../node',
+        'SDL2_PATH': '../../../SDL',
     },
     'xcode_settings': {
         'ALWAYS_SEARCH_USER_PATHS': 'NO',
