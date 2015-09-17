@@ -24,38 +24,10 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 
-var node_sdl2 = null;
-try { node_sdl2 = node_sdl2 || require('./build/Release/node-sdl2.node'); } catch (err) {}
-try { node_sdl2 = node_sdl2 || process._linkedBinding('node_sdl2'); } catch (err) {}
-try { node_sdl2 = node_sdl2 || process.binding('node_sdl2'); } catch (err) {}
-module.exports = node_sdl2;
+var sdl2 = null;
+try { sdl2 = sdl2 || require('./build/Release/node-sdl2.node'); } catch (err) {}
+try { sdl2 = sdl2 || process._linkedBinding('node_sdl2'); } catch (err) {}
+try { sdl2 = sdl2 || process.binding('node_sdl2'); } catch (err) {}
+module.exports = sdl2;
 
-node_sdl2.version = node_sdl2.version || node_sdl2.SDL_MAJOR_VERSION + "." + node_sdl2.SDL_MINOR_VERSION + "." + node_sdl2.SDL_PATCHLEVEL + " (" + node_sdl2.SDL_GetRevisionNumber() + ")";
-
-node_sdl2.SDL_CheckError = node_sdl2.SDL_CheckError || function ()
-{
-	var error = node_sdl2.SDL_GetError(); node_sdl2.SDL_ClearError();
-	if (error) { console.error("SDL", error); }
-	return error;
-};
-
-/// var node_sdl2 = require('@flyover/node-sdl2');
-/// var sdl = node_sdl2.SDL();
-/// node_sdl2.SDL_* -> sdl.*
-node_sdl2.SDL = function (out) {
-	out = out || {};
-	var re = /^(SDL_)(.*)/;
-	for (var key in node_sdl2) {
-		var match = key.match(re);
-		if (match && match[2]) {
-			console.log(key, match[2]);
-			out[match[2]] = node_sdl2[key];
-		} else {
-			//console.log("!!!", key);
-			out[key] = node_sdl2[key];
-		}
-	}
-	return out;
-}
-
-//node_sdl2.SDL();
+sdl2.version = sdl2.version || sdl2.SDL_MAJOR_VERSION + "." + sdl2.SDL_MINOR_VERSION + "." + sdl2.SDL_PATCHLEVEL + " (" + sdl2.SDL_GetRevisionNumber() + ")";
