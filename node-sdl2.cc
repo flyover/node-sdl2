@@ -181,7 +181,7 @@ class TaskSaveBMP : public Nanx::SimpleTask
 
 NANX_EXPORT(SDL_Init)
 {
-	::Uint32 flags = info[0]->Uint32Value();
+	::Uint32 flags = NANX_Uint32(info[0]);
 	int err = SDL_Init(flags);
 	if (err < 0)
 	{
@@ -192,7 +192,7 @@ NANX_EXPORT(SDL_Init)
 
 NANX_EXPORT(SDL_InitSubSystem)
 {
-	::Uint32 flags = info[0]->Uint32Value();
+	::Uint32 flags = NANX_Uint32(info[0]);
 	int err = SDL_InitSubSystem(flags);
 	if (err < 0)
 	{
@@ -203,13 +203,13 @@ NANX_EXPORT(SDL_InitSubSystem)
 
 NANX_EXPORT(SDL_QuitSubSystem)
 {
-	::Uint32 flags = info[0]->Uint32Value();
+	::Uint32 flags = NANX_Uint32(info[0]);
 	SDL_QuitSubSystem(flags);
 }
 
 NANX_EXPORT(SDL_WasInit)
 {
-	::Uint32 flags = info[0]->Uint32Value();
+	::Uint32 flags = NANX_Uint32(info[0]);
 	::Uint32 mask = SDL_WasInit(flags);
 	info.GetReturnValue().Set(Nan::New(mask));
 }
@@ -464,7 +464,7 @@ NANX_EXPORT(SDL_SetHintWithPriority)
 {
 	v8::Local<v8::String> name = v8::Local<v8::String>::Cast(info[0]);
 	v8::Local<v8::String> value = v8::Local<v8::String>::Cast(info[1]);
-	SDL_HintPriority priority = (SDL_HintPriority) info[2]->Int32Value();
+	SDL_HintPriority priority = NANX_SDL_HintPriority(info[2]);
 	SDL_bool ret = SDL_SetHintWithPriority(*v8::String::Utf8Value(name), *v8::String::Utf8Value(value), priority);
 	info.GetReturnValue().Set(Nan::New(ret != SDL_FALSE));
 }
@@ -502,14 +502,14 @@ NANX_EXPORT(SDL_NumJoysticks)
 
 NANX_EXPORT(SDL_JoystickNameForIndex)
 {
-	int device_index = info[0]->Int32Value();
+	int device_index = NANX_int(info[0]);
 	const char* name = SDL_JoystickNameForIndex(device_index);
 	info.GetReturnValue().Set(NANX_STRING(name));
 }
 
 NANX_EXPORT(SDL_JoystickOpen)
 {
-	int device_index = info[0]->Int32Value();
+	int device_index = NANX_int(info[0]);
 	SDL_Joystick* joystick = SDL_JoystickOpen(device_index);
 	info.GetReturnValue().Set(WrapJoystick::Hold(joystick));
 }
@@ -575,7 +575,7 @@ NANX_EXPORT(SDL_JoystickUpdate)
 
 NANX_EXPORT(SDL_JoystickEventState)
 {
-	int state = info[0]->Int32Value();
+	int state = NANX_int(info[0]);
 	int err = SDL_JoystickEventState(state);
 	info.GetReturnValue().Set(Nan::New(err));
 }
@@ -583,7 +583,7 @@ NANX_EXPORT(SDL_JoystickEventState)
 NANX_EXPORT(SDL_JoystickGetAxis)
 {
 	SDL_Joystick* joystick = WrapJoystick::Peek(info[0]); if (!joystick) { return Nan::ThrowError("null SDL_Joystick object"); }
-	int index = info[1]->Int32Value();
+	int index = NANX_int(info[1]);
 	Sint16 value = SDL_JoystickGetAxis(joystick, index);
 	info.GetReturnValue().Set(Nan::New(value));
 }
@@ -591,7 +591,7 @@ NANX_EXPORT(SDL_JoystickGetAxis)
 NANX_EXPORT(SDL_JoystickGetBall)
 {
 	SDL_Joystick* joystick = WrapJoystick::Peek(info[0]); if (!joystick) { return Nan::ThrowError("null SDL_Joystick object"); }
-	int index = info[1]->Int32Value();
+	int index = NANX_int(info[1]);
 	int dx = 0; // TODO
 	int dy = 0; // TODO
 	int value = SDL_JoystickGetBall(joystick, index, &dx, &dy);
@@ -601,7 +601,7 @@ NANX_EXPORT(SDL_JoystickGetBall)
 NANX_EXPORT(SDL_JoystickGetHat)
 {
 	SDL_Joystick* joystick = WrapJoystick::Peek(info[0]); if (!joystick) { return Nan::ThrowError("null SDL_Joystick object"); }
-	int index = info[1]->Int32Value();
+	int index = NANX_int(info[1]);
 	Uint8 value = SDL_JoystickGetHat(joystick, index);
 	info.GetReturnValue().Set(Nan::New(value));
 }
@@ -609,7 +609,7 @@ NANX_EXPORT(SDL_JoystickGetHat)
 NANX_EXPORT(SDL_JoystickGetButton)
 {
 	SDL_Joystick* joystick = WrapJoystick::Peek(info[0]); if (!joystick) { return Nan::ThrowError("null SDL_Joystick object"); }
-	int index = info[1]->Int32Value();
+	int index = NANX_int(info[1]);
 	Uint8 value = SDL_JoystickGetButton(joystick, index);
 	info.GetReturnValue().Set(Nan::New(value));
 }
@@ -636,68 +636,68 @@ NANX_EXPORT(SDL_JoystickClose)
 
 NANX_EXPORT(SDL_PIXELFLAG)
 {
-	::Uint32 format = info[0]->Uint32Value();
+	::Uint32 format = NANX_Uint32(info[0]);
 	info.GetReturnValue().Set(Nan::New(SDL_PIXELFLAG(format)));
 }
 
 NANX_EXPORT(SDL_PIXELTYPE)
 {
-	::Uint32 format = info[0]->Uint32Value();
+	::Uint32 format = NANX_Uint32(info[0]);
 	info.GetReturnValue().Set(Nan::New(SDL_PIXELTYPE(format)));
 }
 
 NANX_EXPORT(SDL_PIXELORDER)
 {
-	::Uint32 format = info[0]->Uint32Value();
+	::Uint32 format = NANX_Uint32(info[0]);
 	info.GetReturnValue().Set(Nan::New(SDL_PIXELORDER(format)));
 }
 
 NANX_EXPORT(SDL_PIXELLAYOUT)
 {
-	::Uint32 format = info[0]->Uint32Value();
+	::Uint32 format = NANX_Uint32(info[0]);
 	info.GetReturnValue().Set(Nan::New(SDL_PIXELLAYOUT(format)));
 }
 
 NANX_EXPORT(SDL_BITSPERPIXEL)
 {
-	::Uint32 format = info[0]->Uint32Value();
+	::Uint32 format = NANX_Uint32(info[0]);
 	info.GetReturnValue().Set(Nan::New(SDL_BITSPERPIXEL(format)));
 }
 
 NANX_EXPORT(SDL_BYTESPERPIXEL)
 {
-	::Uint32 format = info[0]->Uint32Value();
+	::Uint32 format = NANX_Uint32(info[0]);
 	info.GetReturnValue().Set(Nan::New(SDL_BYTESPERPIXEL(format)));
 }
 
 NANX_EXPORT(SDL_ISPIXELFORMAT_INDEXED)
 {
-	::Uint32 format = info[0]->Uint32Value();
+	::Uint32 format = NANX_Uint32(info[0]);
 	info.GetReturnValue().Set(Nan::New(SDL_ISPIXELFORMAT_INDEXED(format) != SDL_FALSE));
 }
 
 NANX_EXPORT(SDL_ISPIXELFORMAT_ALPHA)
 {
-	::Uint32 format = info[0]->Uint32Value();
+	::Uint32 format = NANX_Uint32(info[0]);
 	info.GetReturnValue().Set(Nan::New(SDL_ISPIXELFORMAT_ALPHA(format) != SDL_FALSE));
 }
 
 NANX_EXPORT(SDL_ISPIXELFORMAT_FOURCC)
 {
-	::Uint32 format = info[0]->Uint32Value();
+	::Uint32 format = NANX_Uint32(info[0]);
 	info.GetReturnValue().Set(Nan::New(SDL_ISPIXELFORMAT_FOURCC(format) != SDL_FALSE));
 }
 
 NANX_EXPORT(SDL_GetPixelFormatName)
 {
-	::Uint32 format = info[0]->Uint32Value();
+	::Uint32 format = NANX_Uint32(info[0]);
 	const char* name = SDL_GetPixelFormatName(format);
 	info.GetReturnValue().Set(NANX_STRING(name));
 }
 
 NANX_EXPORT(SDL_PixelFormatEnumToMasks)
 {
-	::Uint32 format = info[0]->Uint32Value();
+	::Uint32 format = NANX_Uint32(info[0]);
 	int bpp = 0;
 	::Uint32 Rmask = 0;
 	::Uint32 Gmask = 0;
@@ -718,11 +718,11 @@ NANX_EXPORT(SDL_PixelFormatEnumToMasks)
 
 NANX_EXPORT(SDL_MasksToPixelFormatEnum)
 {
-	int bpp = info[0]->Int32Value();
-	::Uint32 Rmask = info[1]->Uint32Value();
-	::Uint32 Gmask = info[2]->Uint32Value();
-	::Uint32 Bmask = info[3]->Uint32Value();
-	::Uint32 Amask = info[4]->Uint32Value();
+	int bpp = NANX_int(info[0]);
+	::Uint32 Rmask = NANX_Uint32(info[1]);
+	::Uint32 Gmask = NANX_Uint32(info[2]);
+	::Uint32 Bmask = NANX_Uint32(info[3]);
+	::Uint32 Amask = NANX_Uint32(info[4]);
 	::Uint32 format = SDL_MasksToPixelFormatEnum(bpp, Rmask, Gmask, Bmask, Amask);
 	info.GetReturnValue().Set(Nan::New(format));
 }
@@ -730,7 +730,7 @@ NANX_EXPORT(SDL_MasksToPixelFormatEnum)
 // extern DECLSPEC SDL_PixelFormat * SDLCALL SDL_AllocFormat(Uint32 pixel_format);
 NANX_EXPORT(SDL_AllocFormat)
 {
-	::Uint32 pixel_format = info[0]->Uint32Value();
+	::Uint32 pixel_format = NANX_Uint32(info[0]);
 	SDL_PixelFormat* format = SDL_AllocFormat(pixel_format);
 	info.GetReturnValue().Set(WrapPixelFormat::Hold(format));
 }
@@ -751,9 +751,9 @@ NANX_EXPORT(SDL_FreeFormat)
 NANX_EXPORT(SDL_MapRGB)
 {
 	SDL_PixelFormat* format = WrapPixelFormat::Peek(info[0]); if (!format) { return Nan::ThrowError("null SDL_PixelFormat object"); }
-	::Uint8 r = (::Uint8) info[1]->Uint32Value();
-	::Uint8 g = (::Uint8) info[2]->Uint32Value();
-	::Uint8 b = (::Uint8) info[3]->Uint32Value();
+	::Uint8 r = NANX_Uint8(info[1]);
+	::Uint8 g = NANX_Uint8(info[2]);
+	::Uint8 b = NANX_Uint8(info[3]);
 	::Uint32 pixel = SDL_MapRGB(format, r, g, b);
 	info.GetReturnValue().Set(Nan::New(pixel));
 }
@@ -762,10 +762,10 @@ NANX_EXPORT(SDL_MapRGB)
 NANX_EXPORT(SDL_MapRGBA)
 {
 	SDL_PixelFormat* format = WrapPixelFormat::Peek(info[0]); if (!format) { return Nan::ThrowError("null SDL_PixelFormat object"); }
-	::Uint8 r = (::Uint8) info[1]->Uint32Value();
-	::Uint8 g = (::Uint8) info[2]->Uint32Value();
-	::Uint8 b = (::Uint8) info[3]->Uint32Value();
-	::Uint8 a = (::Uint8) info[4]->Uint32Value();
+	::Uint8 r = NANX_Uint8(info[1]);
+	::Uint8 g = NANX_Uint8(info[2]);
+	::Uint8 b = NANX_Uint8(info[3]);
+	::Uint8 a = NANX_Uint8(info[4]);
 	::Uint32 pixel = SDL_MapRGBA(format, r, g, b, a);
 	info.GetReturnValue().Set(Nan::New(pixel));
 }
@@ -859,8 +859,8 @@ NANX_EXPORT(SDL_RectEquals)
 NANX_EXPORT(SDL_CreateRenderer)
 {
 	SDL_Window* window = WrapWindow::Peek(info[0]); if (!window) { return Nan::ThrowError("null SDL_Window object"); }
-	int index = info[1]->Int32Value();
-	::Uint32 flags = info[2]->Uint32Value();
+	int index = NANX_int(info[1]);
+	::Uint32 flags = NANX_Uint32(info[2]);
 	SDL_Renderer* renderer = SDL_CreateRenderer(window, index, flags);
 	info.GetReturnValue().Set(WrapRenderer::Hold(renderer));
 }
@@ -905,8 +905,8 @@ NANX_EXPORT(SDL_RenderTargetSupported)
 NANX_EXPORT(SDL_RenderSetLogicalSize)
 {
 	SDL_Renderer* renderer = WrapRenderer::Peek(info[0]); if (!renderer) { return Nan::ThrowError("null SDL_Renderer object"); }
-	int w = info[1]->Int32Value();
-	int h = info[2]->Int32Value();
+	int w = NANX_int(info[1]);
+	int h = NANX_int(info[2]);
 	int err = SDL_RenderSetLogicalSize(renderer, w, h);
 	info.GetReturnValue().Set(Nan::New(err));
 }
@@ -951,8 +951,8 @@ NANX_EXPORT(SDL_RenderGetClipRect)
 NANX_EXPORT(SDL_RenderSetScale)
 {
 	SDL_Renderer* renderer = WrapRenderer::Peek(info[0]); if (!renderer) { return Nan::ThrowError("null SDL_Renderer object"); }
-	float scaleX = (float) info[1]->NumberValue();
-	float scaleY = (float) info[2]->NumberValue();
+	float scaleX = NANX_float(info[1]);
+	float scaleY = NANX_float(info[2]);
 	int err = SDL_RenderSetScale(renderer, scaleX, scaleY);
 	info.GetReturnValue().Set(Nan::New(err));
 }
@@ -963,10 +963,10 @@ NANX_EXPORT(SDL_RenderSetScale)
 NANX_EXPORT(SDL_SetRenderDrawColor)
 {
 	SDL_Renderer* renderer = WrapRenderer::Peek(info[0]); if (!renderer) { return Nan::ThrowError("null SDL_Renderer object"); }
-	::Uint8 r = (::Uint8) info[1]->Uint32Value();
-	::Uint8 g = (::Uint8) info[2]->Uint32Value();
-	::Uint8 b = (::Uint8) info[3]->Uint32Value();
-	::Uint8 a = (::Uint8) info[4]->Uint32Value();
+	::Uint8 r = NANX_Uint8(info[1]);
+	::Uint8 g = NANX_Uint8(info[2]);
+	::Uint8 b = NANX_Uint8(info[3]);
+	::Uint8 a = NANX_Uint8(info[4]);
 	int err = SDL_SetRenderDrawColor(renderer, r, g, b, a);
 	info.GetReturnValue().Set(Nan::New(err));
 }
@@ -977,7 +977,7 @@ NANX_EXPORT(SDL_SetRenderDrawColor)
 NANX_EXPORT(SDL_SetRenderDrawBlendMode)
 {
 	SDL_Renderer* renderer = WrapRenderer::Peek(info[0]); if (!renderer) { return Nan::ThrowError("null SDL_Renderer object"); }
-	SDL_BlendMode mode = (SDL_BlendMode) info[1]->Uint32Value();
+	SDL_BlendMode mode = NANX_SDL_BlendMode(info[1]);
 	int err = SDL_SetRenderDrawBlendMode(renderer, mode);
 	info.GetReturnValue().Set(Nan::New(err));
 }
@@ -996,8 +996,8 @@ NANX_EXPORT(SDL_RenderClear)
 NANX_EXPORT(SDL_RenderDrawPoint)
 {
 	SDL_Renderer* renderer = WrapRenderer::Peek(info[0]); if (!renderer) { return Nan::ThrowError("null SDL_Renderer object"); }
-	int x = info[1]->Int32Value();
-	int y = info[2]->Int32Value();
+	int x = NANX_int(info[1]);
+	int y = NANX_int(info[2]);
 	int err = SDL_RenderDrawPoint(renderer, x, y);
 	info.GetReturnValue().Set(Nan::New(err));
 }
@@ -1008,10 +1008,10 @@ NANX_EXPORT(SDL_RenderDrawPoint)
 NANX_EXPORT(SDL_RenderDrawLine)
 {
 	SDL_Renderer* renderer = WrapRenderer::Peek(info[0]); if (!renderer) { return Nan::ThrowError("null SDL_Renderer object"); }
-	int x1 = info[1]->Int32Value();
-	int y1 = info[2]->Int32Value();
-	int x2 = info[3]->Int32Value();
-	int y2 = info[4]->Int32Value();
+	int x1 = NANX_int(info[1]);
+	int y1 = NANX_int(info[2]);
+	int x2 = NANX_int(info[3]);
+	int y2 = NANX_int(info[4]);
 	int err = SDL_RenderDrawLine(renderer, x1, y1, x2, y2);
 	info.GetReturnValue().Set(Nan::New(err));
 }
@@ -1097,7 +1097,7 @@ NANX_EXPORT(SDL_RWseek)
 {
 	SDL_RWops* rwops = WrapRWops::Peek(info[0]); if (!rwops) { return Nan::ThrowError("null SDL_RWops object"); }
 	Sint64 offset = (Sint64) info[1]->IntegerValue();
-	int whence = info[2]->Int32Value();
+	int whence = NANX_int(info[2]);
 	Sint64 pos = SDL_RWseek(rwops, offset, whence);
 	info.GetReturnValue().Set(Nan::New((int32_t) pos)); // TODO: 64 bit integer
 }
@@ -1121,8 +1121,8 @@ NANX_EXPORT(SDL_RWread)
 	void* ptr = (void*) _ptr->GetIndexedPropertiesExternalArrayData();
 	int byte_length = _ptr->GetIndexedPropertiesExternalArrayDataLength();
 	#endif
-	size_t size = info[2]->Uint32Value();
-	size_t maxnum = info[3]->Uint32Value();
+	size_t size = NANX_size_t(info[2]);
+	size_t maxnum = NANX_size_t(info[3]);
 	size_t num = 0;
 	if ((size * maxnum) <= byte_length)
 	{
@@ -1143,8 +1143,8 @@ NANX_EXPORT(SDL_RWwrite)
 	void* ptr = (void*) _ptr->GetIndexedPropertiesExternalArrayData();
 	int byte_length = _ptr->GetIndexedPropertiesExternalArrayDataLength();
 	#endif
-	size_t size = info[2]->Uint32Value();
-	size_t maxnum = info[3]->Uint32Value();
+	size_t size = NANX_size_t(info[2]);
+	size_t maxnum = NANX_size_t(info[3]);
 	size_t num = 0;
 	if ((size * maxnum) <= byte_length)
 	{
@@ -1175,7 +1175,7 @@ NANX_EXPORT(SDL_setenv)
 {
 	v8::Local<v8::String> name = v8::Local<v8::String>::Cast(info[0]);
 	v8::Local<v8::String> value = v8::Local<v8::String>::Cast(info[1]);
-	int overwrite = info[2]->Int32Value();
+	int overwrite = NANX_int(info[2]);
 	int err = SDL_setenv(*v8::String::Utf8Value(name), *v8::String::Utf8Value(value), overwrite);
 	info.GetReturnValue().Set(Nan::New(err));
 }
@@ -1184,14 +1184,14 @@ NANX_EXPORT(SDL_setenv)
 
 NANX_EXPORT(SDL_CreateRGBSurface)
 {
-	::Uint32 flags = info[0]->Uint32Value();
-	int width = info[1]->Int32Value();
-	int height = info[2]->Int32Value();
-	int depth = info[3]->Int32Value();
-	::Uint32 Rmask = info[4]->Uint32Value();
-	::Uint32 Gmask = info[5]->Uint32Value();
-	::Uint32 Bmask = info[6]->Uint32Value();
-	::Uint32 Amask = info[7]->Uint32Value();
+	::Uint32 flags = NANX_Uint32(info[0]);
+	int width = NANX_int(info[1]);
+	int height = NANX_int(info[2]);
+	int depth = NANX_int(info[3]);
+	::Uint32 Rmask = NANX_Uint32(info[4]);
+	::Uint32 Gmask = NANX_Uint32(info[5]);
+	::Uint32 Bmask = NANX_Uint32(info[6]);
+	::Uint32 Amask = NANX_Uint32(info[7]);
 	SDL_Surface* surface = SDL_CreateRGBSurface(flags, width, height, depth, Rmask, Gmask, Bmask, Amask);
 	info.GetReturnValue().Set(WrapSurface::Hold(surface));
 }
@@ -1207,14 +1207,14 @@ NANX_EXPORT(SDL_CreateRGBSurfaceFrom)
 	void* pixels = (void*) _pixels->GetIndexedPropertiesExternalArrayData();
 	//int byte_length = _pixels->GetIndexedPropertiesExternalArrayDataLength();
 	#endif
-	int width = info[1]->Int32Value();
-	int height = info[2]->Int32Value();
-	int depth = info[3]->Int32Value();
-	int pitch = info[4]->Int32Value();
-	::Uint32 Rmask = info[5]->Uint32Value();
-	::Uint32 Gmask = info[6]->Uint32Value();
-	::Uint32 Bmask = info[7]->Uint32Value();
-	::Uint32 Amask = info[8]->Uint32Value();
+	int width = NANX_int(info[1]);
+	int height = NANX_int(info[2]);
+	int depth = NANX_int(info[3]);
+	int pitch = NANX_int(info[4]);
+	::Uint32 Rmask = NANX_Uint32(info[5]);
+	::Uint32 Gmask = NANX_Uint32(info[6]);
+	::Uint32 Bmask = NANX_Uint32(info[7]);
+	::Uint32 Amask = NANX_Uint32(info[8]);
 	SDL_Surface* surface = SDL_CreateRGBSurfaceFrom(pixels, width, height, depth, pitch, Rmask, Gmask, Bmask, Amask);
 	info.GetReturnValue().Set(WrapSurface::Hold(surface));
 }
@@ -1258,7 +1258,7 @@ NANX_EXPORT(SDL_SaveBMP)
 NANX_EXPORT(SDL_SetSurfaceBlendMode)
 {
 	SDL_Surface* surface = WrapSurface::Peek(info[0]); if (!surface) { return Nan::ThrowError("null SDL_Surface object"); }
-	SDL_BlendMode mode = (SDL_BlendMode) info[1]->Uint32Value();
+	SDL_BlendMode mode = NANX_SDL_BlendMode(info[1]);
 	int err = SDL_SetSurfaceBlendMode(surface, mode);
 	info.GetReturnValue().Set(Nan::New(err));
 }
@@ -1272,8 +1272,8 @@ NANX_EXPORT(SDL_SetSurfaceBlendMode)
 NANX_EXPORT(SDL_ConvertSurfaceFormat)
 {
 	SDL_Surface* src_surface = WrapSurface::Peek(info[0]); if (!src_surface) { return Nan::ThrowError("null SDL_Surface object"); }
-	::Uint32 format = info[1]->Uint32Value();
-	::Uint32 flags = info[2]->Uint32Value();
+	::Uint32 format = NANX_Uint32(info[1]);
+	::Uint32 flags = NANX_Uint32(info[2]);
 	SDL_Surface* dst_surface = SDL_ConvertSurfaceFormat(src_surface, format, flags);
 	info.GetReturnValue().Set(WrapSurface::Hold(dst_surface));
 }
@@ -1285,7 +1285,7 @@ NANX_EXPORT(SDL_FillRect)
 {
 	SDL_Surface* surface = WrapSurface::Peek(info[0]); if (!surface) { return Nan::ThrowError("null SDL_Surface object"); }
 	SDL_Rect* rect = (info[1]->IsNull())?(NULL):(&(WrapRect::Unwrap(v8::Local<v8::Object>::Cast(info[1]))->GetRect()));
-	::Uint32 color = info[2]->Uint32Value();
+	::Uint32 color = NANX_Uint32(info[2]);
 	int err = SDL_FillRect(surface, rect, color);
 	info.GetReturnValue().Set(Nan::New(err));
 }
@@ -1332,8 +1332,8 @@ NANX_EXPORT(SDL_BlitScaled)
 NANX_EXPORT(SDL_GetPixel)
 {
 	SDL_Surface* surface = WrapSurface::Peek(info[0]); if (!surface) { return Nan::ThrowError("null SDL_Surface object"); }
-	int x = info[1]->Int32Value();
-	int y = info[2]->Int32Value();
+	int x = NANX_int(info[1]);
+	int y = NANX_int(info[2]);
 	::Uint32 pixel = _SDL_GetPixel(surface, x, y);
 	info.GetReturnValue().Set(Nan::New(pixel));
 }
@@ -1341,9 +1341,9 @@ NANX_EXPORT(SDL_GetPixel)
 NANX_EXPORT(SDL_PutPixel)
 {
 	SDL_Surface* surface = WrapSurface::Peek(info[0]); if (!surface) { return Nan::ThrowError("null SDL_Surface object"); }
-	int x = info[1]->Int32Value();
-	int y = info[2]->Int32Value();
-	::Uint32 pixel = info[3]->Uint32Value();
+	int x = NANX_int(info[1]);
+	int y = NANX_int(info[2]);
+	::Uint32 pixel = NANX_Uint32(info[3]);
 	_SDL_PutPixel(surface, x, y, pixel);
 }
 
@@ -1392,7 +1392,7 @@ NANX_EXPORT(SDL_GetTicks)
 
 NANX_EXPORT(SDL_Delay)
 {
-	::Uint32 ms = info[0]->Uint32Value();
+	::Uint32 ms = NANX_Uint32(info[0]);
 	SDL_Delay(ms);
 }
 
@@ -1422,7 +1422,7 @@ NANX_EXPORT(SDL_GetNumVideoDrivers)
 // extern DECLSPEC const char *SDLCALL SDL_GetVideoDriver(int index);
 NANX_EXPORT(SDL_GetVideoDriver)
 {
-	int index = info[0]->Int32Value();
+	int index = NANX_int(info[0]);
 	info.GetReturnValue().Set(NANX_STRING(SDL_GetVideoDriver(index)));
 }
 
@@ -1454,14 +1454,14 @@ NANX_EXPORT(SDL_GetNumVideoDisplays)
 // extern DECLSPEC const char * SDLCALL SDL_GetDisplayName(int displayIndex);
 NANX_EXPORT(SDL_GetDisplayName)
 {
-	int index = info[0]->Int32Value();
+	int index = NANX_int(info[0]);
 	info.GetReturnValue().Set(NANX_STRING(SDL_GetDisplayName(index)));
 }
 
 // extern DECLSPEC int SDLCALL SDL_GetDisplayBounds(int displayIndex, SDL_Rect * rect);
 NANX_EXPORT(SDL_GetDisplayBounds)
 {
-	int index = info[0]->Int32Value();
+	int index = NANX_int(info[0]);
 	SDL_Rect* rect = (info[1]->IsNull())?(NULL):(&(WrapRect::Unwrap(v8::Local<v8::Object>::Cast(info[1]))->GetRect()));
 	int err = SDL_GetDisplayBounds(index, rect);
 	info.GetReturnValue().Set(Nan::New(err));
@@ -1474,7 +1474,7 @@ NANX_EXPORT(SDL_GetDisplayBounds)
 // TODO: extern DECLSPEC int SDLCALL SDL_GetCurrentDisplayMode(int displayIndex, SDL_DisplayMode * mode);
 NANX_EXPORT(SDL_GetCurrentDisplayMode)
 {
-	int displayIndex = info[0]->Int32Value();
+	int displayIndex = NANX_int(info[0]);
 	//v8::Local<v8::Object> _mode = v8::Local<v8::Object>::Cast(info[1]);
 	//SDL_DisplayMode mode;
 	//int err = SDL_GetCurrentDisplayMode(displayIndex, &mode);
@@ -1516,11 +1516,11 @@ NANX_EXPORT(SDL_GetWindowPixelFormat)
 NANX_EXPORT(SDL_CreateWindow)
 {
 	v8::Local<v8::String> title = v8::Local<v8::String>::Cast(info[0]);
-	int x = info[1]->Int32Value();
-	int y = info[2]->Int32Value();
-	int w = info[3]->Int32Value();
-	int h = info[4]->Int32Value();
-	::Uint32 flags = info[5]->Uint32Value();
+	int x = NANX_int(info[1]);
+	int y = NANX_int(info[2]);
+	int w = NANX_int(info[3]);
+	int h = NANX_int(info[4]);
+	::Uint32 flags = NANX_Uint32(info[5]);
 	SDL_Window* window = SDL_CreateWindow(*v8::String::Utf8Value(title), x, y, w, h, flags);
 	info.GetReturnValue().Set(WrapWindow::Hold(window));
 }
@@ -1564,8 +1564,8 @@ NANX_EXPORT(SDL_SetWindowIcon)
 NANX_EXPORT(SDL_SetWindowPosition)
 {
 	SDL_Window* window = WrapWindow::Peek(info[0]); if (!window) { return Nan::ThrowError("null SDL_Window object"); }
-	int x = info[1]->Int32Value();
-	int y = info[2]->Int32Value();
+	int x = NANX_int(info[1]);
+	int y = NANX_int(info[2]);
 	SDL_SetWindowPosition(window, x, y);
 }
 
@@ -1585,8 +1585,8 @@ NANX_EXPORT(SDL_GetWindowPosition)
 NANX_EXPORT(SDL_SetWindowSize)
 {
 	SDL_Window* window = WrapWindow::Peek(info[0]); if (!window) { return Nan::ThrowError("null SDL_Window object"); }
-	int w = info[1]->Int32Value();
-	int h = info[2]->Int32Value();
+	int w = NANX_int(info[1]);
+	int h = NANX_int(info[2]);
 	SDL_SetWindowSize(window, w, h);
 }
 
@@ -1605,8 +1605,8 @@ NANX_EXPORT(SDL_GetWindowSize)
 NANX_EXPORT(SDL_SetWindowMinimumSize)
 {
 	SDL_Window* window = WrapWindow::Peek(info[0]); if (!window) { return Nan::ThrowError("null SDL_Window object"); }
-	int w = info[1]->Int32Value();
-	int h = info[2]->Int32Value();
+	int w = NANX_int(info[1]);
+	int h = NANX_int(info[2]);
 	SDL_SetWindowMinimumSize(window, w, h);
 }
 
@@ -1626,8 +1626,8 @@ NANX_EXPORT(SDL_GetWindowMinimumSize)
 NANX_EXPORT(SDL_SetWindowMaximumSize)
 {
 	SDL_Window* window = WrapWindow::Peek(info[0]); if (!window) { return Nan::ThrowError("null SDL_Window object"); }
-	int w = info[1]->Int32Value();
-	int h = info[2]->Int32Value();
+	int w = NANX_int(info[1]);
+	int h = NANX_int(info[2]);
 	SDL_SetWindowMaximumSize(window, w, h);
 }
 
@@ -1647,7 +1647,7 @@ NANX_EXPORT(SDL_GetWindowMaximumSize)
 NANX_EXPORT(SDL_SetWindowBordered)
 {
 	SDL_Window* window = WrapWindow::Peek(info[0]); if (!window) { return Nan::ThrowError("null SDL_Window object"); }
-	SDL_bool bordered = (SDL_bool)(info[1]->BooleanValue() != false);
+	SDL_bool bordered = NANX_SDL_bool(info[1]);
 	SDL_SetWindowBordered(window, bordered);
 }
 
@@ -1697,7 +1697,7 @@ NANX_EXPORT(SDL_RestoreWindow)
 NANX_EXPORT(SDL_SetWindowFullscreen)
 {
 	SDL_Window* window = WrapWindow::Peek(info[0]); if (!window) { return Nan::ThrowError("null SDL_Window object"); }
-	::Uint32 flags = info[1]->Uint32Value();
+	::Uint32 flags = NANX_Uint32(info[1]);
 	int err = SDL_SetWindowFullscreen(window, flags);
 	info.GetReturnValue().Set(Nan::New(err));
 }
@@ -1710,7 +1710,7 @@ NANX_EXPORT(SDL_SetWindowFullscreen)
 NANX_EXPORT(SDL_SetWindowGrab)
 {
 	SDL_Window* window = WrapWindow::Peek(info[0]); if (!window) { return Nan::ThrowError("null SDL_Window object"); }
-	SDL_bool grab = (SDL_bool)(info[1]->BooleanValue() != false);
+	SDL_bool grab = NANX_SDL_bool(info[1]);
 	SDL_SetWindowGrab(window, grab);
 }
 
@@ -1726,7 +1726,7 @@ NANX_EXPORT(SDL_GetWindowGrab)
 NANX_EXPORT(SDL_SetWindowBrightness)
 {
 	SDL_Window* window = WrapWindow::Peek(info[0]); if (!window) { return Nan::ThrowError("null SDL_Window object"); }
-	float brightness = (float) info[1]->NumberValue();
+	float brightness = NANX_float(info[1]);
 	SDL_SetWindowBrightness(window, brightness);
 }
 
@@ -1780,8 +1780,8 @@ NANX_EXPORT(SDL_GL_ExtensionSupported)
 // extern DECLSPEC int SDLCALL SDL_GL_SetAttribute(SDL_GLattr attr, int value);
 NANX_EXPORT(SDL_GL_SetAttribute)
 {
-	SDL_GLattr attr = (SDL_GLattr) info[0]->Int32Value();
-	int value = info[1]->Int32Value();
+	SDL_GLattr attr = NANX_SDL_GLattr(info[0]);
+	int value = NANX_int(info[1]);
 	int err = SDL_GL_SetAttribute(attr, value);
 	info.GetReturnValue().Set(Nan::New(err));
 }
@@ -1789,7 +1789,7 @@ NANX_EXPORT(SDL_GL_SetAttribute)
 // extern DECLSPEC int SDLCALL SDL_GL_GetAttribute(SDL_GLattr attr, int *value);
 NANX_EXPORT(SDL_GL_GetAttribute)
 {
-	SDL_GLattr attr = (SDL_GLattr) info[0]->Int32Value();
+	SDL_GLattr attr = NANX_SDL_GLattr(info[0]);
 	v8::Local<v8::Array> ret_value = v8::Local<v8::Array>::Cast(info[1]);
 	int value = 0;
 	int err = SDL_GL_GetAttribute(attr, &value);
@@ -1872,7 +1872,7 @@ NANX_EXPORT(SDL_GL_GetDrawableSize)
 // extern DECLSPEC int SDLCALL SDL_GL_SetSwapInterval(int interval);
 NANX_EXPORT(SDL_GL_SetSwapInterval)
 {
-	int interval = info[0]->Int32Value();
+	int interval = NANX_int(info[0]);
 	int err = SDL_GL_SetSwapInterval(interval);
 	info.GetReturnValue().Set(Nan::New(err));
 }
@@ -2071,8 +2071,8 @@ NANX_EXPORT(SDL_EXT_ImageDataToSurface)
 	v8::Local<v8::Object> _pixels = v8::Local<v8::Object>::Cast(data);
 	void* pixels = (void*) _pixels->GetIndexedPropertiesExternalArrayData();
 	#endif
-	int w = width->Int32Value();
-	int h = height->Int32Value();
+	int w = NANX_int(width);
+	int h = NANX_int(height);
 	int depth = 0;
 	int pitch = w * SDL_BYTESPERPIXEL(format);
 	::Uint32 Rmask = 0, Gmask = 0, Bmask = 0, Amask = 0;
@@ -2083,7 +2083,6 @@ NANX_EXPORT(SDL_EXT_ImageDataToSurface)
 
 NAN_MODULE_INIT(init)
 {
-
 	#if defined(SDL_MAIN_NEEDED) || defined(SDL_MAIN_AVAILABLE)
 	SDL_SetMainReady();
 	#endif

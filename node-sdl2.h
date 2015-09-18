@@ -53,8 +53,8 @@
 #define NANX_MEMBER_APPLY_SET(OBJECT_TEMPLATE, NAME) Nan::SetAccessor(OBJECT_TEMPLATE, NANX_SYMBOL(#NAME), NULL, _set_##NAME); // set only
 
 #define NANX_MEMBER_VALUE(NAME) NANX_MEMBER_VALUE_GET(NAME) NANX_MEMBER_VALUE_SET(NAME)
-#define NANX_MEMBER_VALUE_GET(NAME) static NAN_GETTER(_get_##NAME) { Unwrap(info.This())->SyncPull(); info.GetReturnValue().Set(Nan::New<v8::Value>(Unwrap(info.This())->m_wrap_##NAME)); }
-#define NANX_MEMBER_VALUE_SET(NAME) static NAN_SETTER(_set_##NAME) { Unwrap(info.This())->m_wrap_##NAME.Reset(value.As<v8::Value>()); Unwrap(info.This())->SyncPush(); info.GetReturnValue().Set(value); }
+#define NANX_MEMBER_VALUE_GET(NAME) static NAN_GETTER(_get_##NAME) { info.GetReturnValue().Set(Nan::New<v8::Value>(Unwrap(info.This())->m_wrap_##NAME)); }
+#define NANX_MEMBER_VALUE_SET(NAME) static NAN_SETTER(_set_##NAME) { Unwrap(info.This())->m_wrap_##NAME.Reset(value.As<v8::Value>()); info.GetReturnValue().Set(value); }
 
 #define NANX_MEMBER_BOOLEAN(TYPE, NAME) NANX_MEMBER_BOOLEAN_GET(TYPE, NAME) NANX_MEMBER_BOOLEAN_SET(TYPE, NAME)
 #define NANX_MEMBER_BOOLEAN_GET(TYPE, NAME) static NAN_GETTER(_get_##NAME) { info.GetReturnValue().Set(Nan::New<v8::Boolean>(static_cast<bool>(Peek(info.This())->NAME))); }
@@ -77,25 +77,31 @@
 #define NANX_MEMBER_UINT32_SET(TYPE, NAME) static NAN_SETTER(_set_##NAME) { Peek(info.This())->NAME = static_cast<TYPE>(value->Uint32Value()); }
 
 #define NANX_MEMBER_STRING(NAME) NANX_MEMBER_STRING_GET(NAME) NANX_MEMBER_STRING_SET(NAME)
-#define NANX_MEMBER_STRING_GET(NAME) static NAN_GETTER(_get_##NAME) { Unwrap(info.This())->SyncPull(); info.GetReturnValue().Set(Nan::New<v8::String>(Unwrap(info.This())->m_wrap_##NAME)); }
-#define NANX_MEMBER_STRING_SET(NAME) static NAN_SETTER(_set_##NAME) { Unwrap(info.This())->m_wrap_##NAME.Reset(value.As<v8::String>()); Unwrap(info.This())->SyncPush(); info.GetReturnValue().Set(value); }
+#define NANX_MEMBER_STRING_GET(NAME) static NAN_GETTER(_get_##NAME) { info.GetReturnValue().Set(Nan::New<v8::String>(Unwrap(info.This())->m_wrap_##NAME)); }
+#define NANX_MEMBER_STRING_SET(NAME) static NAN_SETTER(_set_##NAME) { Unwrap(info.This())->m_wrap_##NAME.Reset(value.As<v8::String>()); info.GetReturnValue().Set(value); }
 
 #define NANX_MEMBER_OBJECT(NAME) NANX_MEMBER_OBJECT_GET(NAME) NANX_MEMBER_OBJECT_SET(NAME)
-#define NANX_MEMBER_OBJECT_GET(NAME) static NAN_GETTER(_get_##NAME) { Unwrap(info.This())->SyncPull(); info.GetReturnValue().Set(Nan::New<v8::Object>(Unwrap(info.This())->m_wrap_##NAME)); }
-#define NANX_MEMBER_OBJECT_SET(NAME) static NAN_SETTER(_set_##NAME) { Unwrap(info.This())->m_wrap_##NAME.Reset(value.As<v8::Object>()); Unwrap(info.This())->SyncPush(); info.GetReturnValue().Set(value); }
+#define NANX_MEMBER_OBJECT_GET(NAME) static NAN_GETTER(_get_##NAME) { info.GetReturnValue().Set(Nan::New<v8::Object>(Unwrap(info.This())->m_wrap_##NAME)); }
+#define NANX_MEMBER_OBJECT_SET(NAME) static NAN_SETTER(_set_##NAME) { Unwrap(info.This())->m_wrap_##NAME.Reset(value.As<v8::Object>()); info.GetReturnValue().Set(value); }
 
 #define NANX_MEMBER_ARRAY(NAME) NANX_MEMBER_ARRAY_GET(NAME) NANX_MEMBER_ARRAY_SET(NAME)
-#define NANX_MEMBER_ARRAY_GET(NAME) static NAN_GETTER(_get_##NAME) { Unwrap(info.This())->SyncPull(); info.GetReturnValue().Set(Nan::New<v8::Array>(Unwrap(info.This())->m_wrap_##NAME)); }
-#define NANX_MEMBER_ARRAY_SET(NAME) static NAN_SETTER(_set_##NAME) { Unwrap(info.This())->m_wrap_##NAME.Reset(value.As<v8::Array>()); Unwrap(info.This())->SyncPush(); info.GetReturnValue().Set(value); }
+#define NANX_MEMBER_ARRAY_GET(NAME) static NAN_GETTER(_get_##NAME) { info.GetReturnValue().Set(Nan::New<v8::Array>(Unwrap(info.This())->m_wrap_##NAME)); }
+#define NANX_MEMBER_ARRAY_SET(NAME) static NAN_SETTER(_set_##NAME) { Unwrap(info.This())->m_wrap_##NAME.Reset(value.As<v8::Array>()); info.GetReturnValue().Set(value); }
 
-#define NANX_int(value)		static_cast<int>((value)->Int32Value())
-#define NANX_double(value)	static_cast<double>((value)->NumberValue())
-#define NANX_Sint8(value)	static_cast< ::Sint8 >((value)->Int32Value())
-#define NANX_Uint8(value)	static_cast< ::Uint8 >((value)->Uint32Value())
-#define NANX_Sint16(value)	static_cast< ::Sint16 >((value)->Int32Value())
-#define NANX_Uint16(value)	static_cast< ::Uint16 >((value)->Uint32Value())
-#define NANX_Sint32(value)	static_cast< ::Sint32 >((value)->Int32Value())
-#define NANX_Uint32(value)	static_cast< ::Uint32 >((value)->Uint32Value())
+#define NANX_int(value)					static_cast<int>((value)->Int32Value())
+#define NANX_float(value)				static_cast<float>((value)->NumberValue())
+#define NANX_double(value)				static_cast<double>((value)->NumberValue())
+#define NANX_Sint8(value)				static_cast< ::Sint8 >((value)->Int32Value())
+#define NANX_Uint8(value)				static_cast< ::Uint8 >((value)->Uint32Value())
+#define NANX_Sint16(value)				static_cast< ::Sint16 >((value)->Int32Value())
+#define NANX_Uint16(value)				static_cast< ::Uint16 >((value)->Uint32Value())
+#define NANX_Sint32(value)				static_cast< ::Sint32 >((value)->Int32Value())
+#define NANX_Uint32(value)				static_cast< ::Uint32 >((value)->Uint32Value())
+#define NANX_size_t(value)				static_cast<size_t>((value)->Uint32Value())
+#define NANX_SDL_bool(value)			static_cast<SDL_bool>((value)->BooleanValue())
+#define NANX_SDL_BlendMode(value)		static_cast<SDL_BlendMode>((value)->Uint32Value())
+#define NANX_SDL_GLattr(value)			static_cast<SDL_GLattr>((value)->Uint32Value())
+#define NANX_SDL_HintPriority(value)	static_cast<SDL_HintPriority>((value)->Uint32Value())
 
 namespace Nanx {
 
@@ -160,8 +166,8 @@ public:
 		Nan::EscapableHandleScope scope;
 		v8::Local<v8::Function> constructor = GetConstructor();
 		v8::Local<v8::Object> instance = constructor->NewInstance();
-		WrapDisplayMode* wrap = new WrapDisplayMode();
-		wrap->Wrap(instance);
+		//WrapDisplayMode* wrap = new WrapDisplayMode();
+		//wrap->Wrap(instance);
 		return scope.Escape(instance);
 	}
 	static v8::Local<v8::Object> NewInstance(const SDL_DisplayMode& display_mode)
@@ -169,8 +175,10 @@ public:
 		Nan::EscapableHandleScope scope;
 		v8::Local<v8::Function> constructor = GetConstructor();
 		v8::Local<v8::Object> instance = constructor->NewInstance();
-		WrapDisplayMode* wrap = new WrapDisplayMode(display_mode);
-		wrap->Wrap(instance);
+		//WrapDisplayMode* wrap = new WrapDisplayMode(display_mode);
+		//wrap->Wrap(instance);
+		WrapDisplayMode* wrap = Unwrap(instance);
+		wrap->SetDisplayMode(display_mode);
 		return scope.Escape(instance);
 	}
 private:
@@ -252,8 +260,8 @@ public:
 		Nan::EscapableHandleScope scope;
 		v8::Local<v8::Function> constructor = GetConstructor();
 		v8::Local<v8::Object> instance = constructor->NewInstance();
-		WrapColor* wrap = new WrapColor();
-		wrap->Wrap(instance);
+		//WrapColor* wrap = new WrapColor();
+		//wrap->Wrap(instance);
 		return scope.Escape(instance);
 	}
 	static v8::Local<v8::Object> NewInstance(const SDL_Color& color)
@@ -261,8 +269,10 @@ public:
 		Nan::EscapableHandleScope scope;
 		v8::Local<v8::Function> constructor = GetConstructor();
 		v8::Local<v8::Object> instance = constructor->NewInstance();
-		WrapColor* wrap = new WrapColor(color);
-		wrap->Wrap(instance);
+		//WrapColor* wrap = new WrapColor(color);
+		//wrap->Wrap(instance);
+		WrapColor* wrap = Unwrap(instance);
+		wrap->SetColor(color);
 		return scope.Escape(instance);
 	}
 private:
@@ -348,8 +358,8 @@ public:
 		Nan::EscapableHandleScope scope;
 		v8::Local<v8::Function> constructor = GetConstructor();
 		v8::Local<v8::Object> instance = constructor->NewInstance();
-		WrapPoint* wrap = new WrapPoint();
-		wrap->Wrap(instance);
+		//WrapPoint* wrap = new WrapPoint();
+		//wrap->Wrap(instance);
 		return scope.Escape(instance);
 	}
 	static v8::Local<v8::Object> NewInstance(const SDL_Point& point)
@@ -357,8 +367,10 @@ public:
 		Nan::EscapableHandleScope scope;
 		v8::Local<v8::Function> constructor = GetConstructor();
 		v8::Local<v8::Object> instance = constructor->NewInstance();
-		WrapPoint* wrap = new WrapPoint(point);
-		wrap->Wrap(instance);
+		//WrapPoint* wrap = new WrapPoint(point);
+		//wrap->Wrap(instance);
+		WrapPoint* wrap = Unwrap(instance);
+		wrap->SetPoint(point);
 		return scope.Escape(instance);
 	}
 private:
@@ -438,8 +450,8 @@ public:
 		Nan::EscapableHandleScope scope;
 		v8::Local<v8::Function> constructor = GetConstructor();
 		v8::Local<v8::Object> instance = constructor->NewInstance();
-		WrapRect* wrap = new WrapRect();
-		wrap->Wrap(instance);
+		//WrapRect* wrap = new WrapRect();
+		//wrap->Wrap(instance);
 		return scope.Escape(instance);
 	}
 	static v8::Local<v8::Object> NewInstance(const SDL_Rect& rect)
@@ -447,8 +459,10 @@ public:
 		Nan::EscapableHandleScope scope;
 		v8::Local<v8::Function> constructor = GetConstructor();
 		v8::Local<v8::Object> instance = constructor->NewInstance();
-		WrapRect* wrap = new WrapRect(rect);
-		wrap->Wrap(instance);
+		//WrapRect* wrap = new WrapRect(rect);
+		//wrap->Wrap(instance);
+		WrapRect* wrap = Unwrap(instance);
+		wrap->SetRect(rect);
 		return scope.Escape(instance);
 	}
 private:
