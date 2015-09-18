@@ -630,7 +630,6 @@ public:
 		v8::Local<v8::Object> instance = object_template->NewInstance();
 		WrapRWops* wrap = new WrapRWops(rwops);
 		wrap->Wrap(instance);
-		wrap->MakeWeak(); // TODO: is this necessary?
 		return scope.Escape(instance);
 	}
 private:
@@ -680,7 +679,6 @@ public:
 		v8::Local<v8::Object> instance = object_template->NewInstance();
 		WrapWindow* wrap = new WrapWindow(window);
 		wrap->Wrap(instance);
-		wrap->MakeWeak(); // TODO: is this necessary?
 		return scope.Escape(instance);
 	}
 private:
@@ -730,7 +728,6 @@ public:
 		v8::Local<v8::Object> instance = object_template->NewInstance();
 		WrapGLContext* wrap = new WrapGLContext(gl_context);
 		wrap->Wrap(instance);
-		wrap->MakeWeak(); // TODO: is this necessary?
 		return scope.Escape(instance);
 	}
 private:
@@ -780,7 +777,6 @@ public:
 		v8::Local<v8::Object> instance = object_template->NewInstance();
 		WrapSurface* wrap = new WrapSurface(surface);
 		wrap->Wrap(instance);
-		wrap->MakeWeak(); // TODO: is this necessary?
 		return scope.Escape(instance);
 	}
 private:
@@ -837,7 +833,6 @@ public:
 		v8::Local<v8::Object> instance = object_template->NewInstance();
 		WrapRenderer* wrap = new WrapRenderer(renderer);
 		wrap->Wrap(instance);
-		wrap->MakeWeak(); // TODO: is this necessary?
 		return scope.Escape(instance);
 	}
 private:
@@ -887,7 +882,6 @@ public:
 		v8::Local<v8::Object> instance = object_template->NewInstance();
 		WrapJoystick* wrap = new WrapJoystick(joystick);
 		wrap->Wrap(instance);
-		wrap->MakeWeak(); // TODO: is this necessary?
 		return scope.Escape(instance);
 	}
 private:
