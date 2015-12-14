@@ -423,17 +423,22 @@ NANX_EXPORT(SDL_PollEvent)
 	case SDL_FINGERDOWN:
 	case SDL_FINGERUP:
 	case SDL_FINGERMOTION:
-		evt->Set(NANX_SYMBOL("touchId"), Nan::New((int32_t) event.tfinger.touchId)); // TODO: 64 bit integer
-		evt->Set(NANX_SYMBOL("fingerId"), Nan::New((int32_t) event.tfinger.fingerId)); // TODO: 64 bit integer
+		//evt->Set(NANX_SYMBOL("touchId"), Nan::New((int32_t) event.tfinger.touchId)); // TODO: 64 bit integer
+		//evt->Set(NANX_SYMBOL("fingerId"), Nan::New((int32_t) event.tfinger.fingerId)); // TODO: 64 bit integer
+		{
+			char buffer[64];
+			SDL_snprintf(buffer, sizeof(buffer), "%" SDL_PRIs64, event.tfinger.touchId);
+			evt->Set(NANX_SYMBOL("touchId"), NANX_STRING(buffer));
+			SDL_snprintf(buffer, sizeof(buffer), "%" SDL_PRIs64, event.tfinger.fingerId);
+			evt->Set(NANX_SYMBOL("fingerId"), NANX_STRING(buffer));
+		}
 		evt->Set(NANX_SYMBOL("x"), Nan::New(event.tfinger.x));
 		evt->Set(NANX_SYMBOL("y"), Nan::New(event.tfinger.y));
 		evt->Set(NANX_SYMBOL("dx"), Nan::New(event.tfinger.dx));
 		evt->Set(NANX_SYMBOL("dy"), Nan::New(event.tfinger.dy));
 		evt->Set(NANX_SYMBOL("pressure"), Nan::New(event.tfinger.pressure));
-		{
-			evt->Set(NANX_SYMBOL("nx"), Nan::New((2.0f * float(event.tfinger.x)) - 1.0f));
-			evt->Set(NANX_SYMBOL("ny"), Nan::New(1.0f - (2.0f * float(event.tfinger.y))));
-		}
+		evt->Set(NANX_SYMBOL("nx"), Nan::New((2.0f * float(event.tfinger.x)) - 1.0f));
+		evt->Set(NANX_SYMBOL("ny"), Nan::New(1.0f - (2.0f * float(event.tfinger.y))));
 		break;
 	case SDL_DOLLARGESTURE:
 	case SDL_DOLLARRECORD:
