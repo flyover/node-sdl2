@@ -1,27 +1,27 @@
 /**
- * Copyright (c) Flyover Games, LLC.  All rights reserved. 
- *  
- * Permission is hereby granted, free of charge, to any person 
- * obtaining a copy of this software and associated 
- * documentation files (the "Software"), to deal in the Software 
- * without restriction, including without limitation the rights 
- * to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to 
- * whom the Software is furnished to do so, subject to the 
- * following conditions: 
- *  
- * The above copyright notice and this permission notice shall 
- * be included in all copies or substantial portions of the 
- * Software. 
- *  
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY 
- * KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR 
- * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
- * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR 
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
- * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+ * Copyright (c) Flyover Games, LLC.  All rights reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software
+ * without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to
+ * whom the Software is furnished to do so, subject to the
+ * following conditions:
+ *
+ * The above copyright notice and this permission notice shall
+ * be included in all copies or substantial portions of the
+ * Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+ * KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 #include "node-sdl2.h"
@@ -445,12 +445,17 @@ NANX_EXPORT(SDL_PollEvent)
 	case SDL_MULTIGESTURE:
 	case SDL_CLIPBOARDUPDATE:
 	case SDL_DROPFILE:
+	#if SDL_VERSION_ATLEAST(2,0,5)
+	case SDL_DROPTEXT:
+	case SDL_DROPBEGIN:
+	case SDL_DROPCOMPLETE:
+	#endif
 	#if SDL_VERSION_ATLEAST(2,0,4)
-    case SDL_AUDIODEVICEADDED:
-    case SDL_AUDIODEVICEREMOVED:
-    case SDL_RENDER_TARGETS_RESET:
-    case SDL_RENDER_DEVICE_RESET:
-    #endif
+	case SDL_AUDIODEVICEADDED:
+	case SDL_AUDIODEVICEREMOVED:
+	case SDL_RENDER_TARGETS_RESET:
+	case SDL_RENDER_DEVICE_RESET:
+	#endif
 	case SDL_USEREVENT:
 		// TODO
 		break;
@@ -490,6 +495,16 @@ NANX_EXPORT(SDL_GetHint)
 	const char* value = SDL_GetHint(*v8::String::Utf8Value(name));
 	info.GetReturnValue().Set(NANX_STRING(value));
 }
+
+#if SDL_VERSION_ATLEAST(2, 0, 5)
+NANX_EXPORT(SDL_GetHintBoolean)
+{
+	v8::Local<v8::String> name = v8::Local<v8::String>::Cast(info[0]);
+	SDL_bool default_value = (info[1]->IsBoolean())?(NANX_SDL_bool(info[1])):(SDL_FALSE);
+	SDL_bool value = SDL_GetHintBoolean(*v8::String::Utf8Value(name), default_value);
+	info.GetReturnValue().Set(Nan::New(value));
+}
+#endif
 
 // TODO: typedef void (*SDL_HintCallback)(void *userdata, const char *name, const char *oldValue, const char *newValue);
 // TODO: extern DECLSPEC void SDLCALL SDL_AddHintCallback(const char *name, SDL_HintCallback callback, void *userdata);
@@ -919,6 +934,10 @@ NANX_EXPORT(SDL_RenderSetLogicalSize)
 }
 
 // TODO: extern DECLSPEC void SDLCALL SDL_RenderGetLogicalSize(SDL_Renderer * renderer, int *w, int *h);
+#if SDL_VERSION_ATLEAST(2, 0, 5)
+// TODO: extern DECLSPEC int SDLCALL SDL_RenderSetIntegerScale(SDL_Renderer * renderer, SDL_bool enable);
+// TODO: extern DECLSPEC SDL_bool SDLCALL SDL_RenderGetIntegerScale(SDL_Renderer * renderer);
+#endif
 
 // extern DECLSPEC int SDLCALL SDL_RenderSetViewport(SDL_Renderer * renderer, const SDL_Rect * rect);
 NANX_EXPORT(SDL_RenderSetViewport)
@@ -1203,6 +1222,10 @@ NANX_EXPORT(SDL_CreateRGBSurface)
 	info.GetReturnValue().Set(WrapSurface::Hold(surface));
 }
 
+#if SDL_VERSION_ATLEAST(2, 0, 5)
+// TODO: extern DECLSPEC SDL_Surface *SDLCALL SDL_CreateRGBSurfaceWithFormat(Uint32 flags, int width, int height, int depth, Uint32 format);
+#endif
+
 NANX_EXPORT(SDL_CreateRGBSurfaceFrom)
 {
 	#if NODE_VERSION_AT_LEAST(4, 0, 0)
@@ -1225,6 +1248,10 @@ NANX_EXPORT(SDL_CreateRGBSurfaceFrom)
 	SDL_Surface* surface = SDL_CreateRGBSurfaceFrom(pixels, width, height, depth, pitch, Rmask, Gmask, Bmask, Amask);
 	info.GetReturnValue().Set(WrapSurface::Hold(surface));
 }
+
+#if SDL_VERSION_ATLEAST(2, 0, 5)
+// TODO: extern DECLSPEC SDL_Surface *SDLCALL SDL_CreateRGBSurfaceWithFormatFrom(void *pixels, int width, int height, int depth, int pitch, Uint32 format);
+#endif
 
 NANX_EXPORT(SDL_FreeSurface)
 {
@@ -1473,6 +1500,14 @@ NANX_EXPORT(SDL_GetDisplayBounds)
 	int err = SDL_GetDisplayBounds(index, rect);
 	info.GetReturnValue().Set(Nan::New(err));
 }
+
+#if SDL_VERSION_ATLEAST(2, 0, 4)
+// TODO: extern DECLSPEC int SDLCALL SDL_GetDisplayDPI(int displayIndex, float * ddpi, float * hdpi, float * vdpi);
+#endif
+
+#if SDL_VERSION_ATLEAST(2, 0, 5)
+// TODO: extern DECLSPEC int SDLCALL SDL_GetDisplayUsableBounds(int displayIndex, SDL_Rect * rect);
+#endif
 
 // TODO: extern DECLSPEC int SDLCALL SDL_GetNumDisplayModes(int displayIndex);
 // TODO: extern DECLSPEC int SDLCALL SDL_GetDisplayMode(int displayIndex, int modeIndex, SDL_DisplayMode * mode);
@@ -1975,7 +2010,7 @@ public:
 		m_callback.Reset(callback);
 		m_image_data.Reset(Nan::New<v8::Object>());
 
-        static const ::Uint32 format = SDL_PIXELFORMAT_ABGR8888; // ImageData pixel format
+		static const ::Uint32 format = SDL_PIXELFORMAT_ABGR8888; // ImageData pixel format
 
 		int w = (m_surface)?(m_surface->w):(0);
 		int h = (m_surface)?(m_surface->h):(0);
@@ -2012,7 +2047,7 @@ public:
 	{
 		if (m_surface)
 		{
-            SurfaceToImageData(m_surface, m_pixels, m_length);
+			SurfaceToImageData(m_surface, m_pixels, m_length);
 		}
 	}
 	void DoAfterWork(int status)
@@ -2058,7 +2093,7 @@ NANX_EXPORT(SDL_EXT_SurfaceToImageData)
 	void* pixels = (void*) _pixels->GetIndexedPropertiesExternalArrayData();
 	#endif
 
-    SurfaceToImageData(surface, pixels, length);
+	SurfaceToImageData(surface, pixels, length);
 
 	info.GetReturnValue().Set(image_data);
 }
@@ -2237,12 +2272,17 @@ NAN_MODULE_INIT(init)
 	NANX_CONSTANT(EventType, SDL_MULTIGESTURE);
 	NANX_CONSTANT(EventType, SDL_CLIPBOARDUPDATE);
 	NANX_CONSTANT(EventType, SDL_DROPFILE);
+	#if SDL_VERSION_ATLEAST(2,0,5)
+	NANX_CONSTANT(EventType, SDL_DROPTEXT);
+	NANX_CONSTANT(EventType, SDL_DROPBEGIN);
+	NANX_CONSTANT(EventType, SDL_DROPCOMPLETE);
+	#endif
 	#if SDL_VERSION_ATLEAST(2,0,4)
-    NANX_CONSTANT(EventType, SDL_AUDIODEVICEADDED);
-    NANX_CONSTANT(EventType, SDL_AUDIODEVICEREMOVED);
-    NANX_CONSTANT(EventType, SDL_RENDER_TARGETS_RESET);
-    NANX_CONSTANT(EventType, SDL_RENDER_DEVICE_RESET);
-    #endif
+	NANX_CONSTANT(EventType, SDL_AUDIODEVICEADDED);
+	NANX_CONSTANT(EventType, SDL_AUDIODEVICEREMOVED);
+	NANX_CONSTANT(EventType, SDL_RENDER_TARGETS_RESET);
+	NANX_CONSTANT(EventType, SDL_RENDER_DEVICE_RESET);
+	#endif
 	NANX_CONSTANT(EventType, SDL_USEREVENT);
 	NANX_CONSTANT(EventType, SDL_LASTEVENT);
 
@@ -2262,42 +2302,84 @@ NAN_MODULE_INIT(init)
 	NANX_CONSTANT_STRING(target, SDL_HINT_FRAMEBUFFER_ACCELERATION);
 	NANX_CONSTANT_STRING(target, SDL_HINT_RENDER_DRIVER);
 	NANX_CONSTANT_STRING(target, SDL_HINT_RENDER_OPENGL_SHADERS);
+	#if SDL_VERSION_ATLEAST(2, 0, 1)
 	NANX_CONSTANT_STRING(target, SDL_HINT_RENDER_DIRECT3D_THREADSAFE);
+	#endif
+	#if SDL_VERSION_ATLEAST(2, 0, 3)
 	NANX_CONSTANT_STRING(target, SDL_HINT_RENDER_DIRECT3D11_DEBUG);
+	#endif
 	NANX_CONSTANT_STRING(target, SDL_HINT_RENDER_SCALE_QUALITY);
 	NANX_CONSTANT_STRING(target, SDL_HINT_RENDER_VSYNC);
+	#if SDL_VERSION_ATLEAST(2, 0, 2)
 	NANX_CONSTANT_STRING(target, SDL_HINT_VIDEO_ALLOW_SCREENSAVER);
+	#endif
 	NANX_CONSTANT_STRING(target, SDL_HINT_VIDEO_X11_XVIDMODE);
 	NANX_CONSTANT_STRING(target, SDL_HINT_VIDEO_X11_XINERAMA);
 	NANX_CONSTANT_STRING(target, SDL_HINT_VIDEO_X11_XRANDR);
-	//NANX_CONSTANT_STRING(target, SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN);
-	//NANX_CONSTANT_STRING(target, SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP);
+	#if SDL_VERSION_ATLEAST(2, 0, 4)
+	NANX_CONSTANT_STRING(target, SDL_HINT_VIDEO_X11_NET_WM_PING);
+	NANX_CONSTANT_STRING(target, SDL_HINT_WINDOW_FRAME_USABLE_WHILE_CURSOR_HIDDEN);
+	NANX_CONSTANT_STRING(target, SDL_HINT_WINDOWS_ENABLE_MESSAGELOOP);
+	#endif
 	NANX_CONSTANT_STRING(target, SDL_HINT_GRAB_KEYBOARD);
+	#if SDL_VERSION_ATLEAST(2, 0, 2)
 	NANX_CONSTANT_STRING(target, SDL_HINT_MOUSE_RELATIVE_MODE_WARP);
+	#endif
+	#if SDL_VERSION_ATLEAST(2, 0, 5)
+	NANX_CONSTANT_STRING(target, SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH);
+	#endif
 	NANX_CONSTANT_STRING(target, SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS);
 	NANX_CONSTANT_STRING(target, SDL_HINT_IDLE_TIMER_DISABLED);
 	NANX_CONSTANT_STRING(target, SDL_HINT_ORIENTATIONS);
+	#if SDL_VERSION_ATLEAST(2, 0, 5)
+	NANX_CONSTANT_STRING(target, SDL_HINT_APPLE_TV_CONTROLLER_UI_EVENTS);
+	NANX_CONSTANT_STRING(target, SDL_HINT_APPLE_TV_REMOTE_ALLOW_ROTATION);
+	#endif
+	#if SDL_VERSION_ATLEAST(2, 0, 2)
 	NANX_CONSTANT_STRING(target, SDL_HINT_ACCELEROMETER_AS_JOYSTICK);
+	#endif
 	NANX_CONSTANT_STRING(target, SDL_HINT_XINPUT_ENABLED);
-	//NANX_CONSTANT_STRING(target, SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING);
+	#if SDL_VERSION_ATLEAST(2, 0, 4)
+	NANX_CONSTANT_STRING(target, SDL_HINT_XINPUT_USE_OLD_JOYSTICK_MAPPING);
+	#endif
 	NANX_CONSTANT_STRING(target, SDL_HINT_GAMECONTROLLERCONFIG);
 	NANX_CONSTANT_STRING(target, SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS);
 	NANX_CONSTANT_STRING(target, SDL_HINT_ALLOW_TOPMOST);
 	NANX_CONSTANT_STRING(target, SDL_HINT_TIMER_RESOLUTION);
+	#if SDL_VERSION_ATLEAST(2, 0, 4)
+	NANX_CONSTANT_STRING(target, SDL_HINT_THREAD_STACK_SIZE);
+	#endif
+	#if SDL_VERSION_ATLEAST(2, 0, 1)
 	NANX_CONSTANT_STRING(target, SDL_HINT_VIDEO_HIGHDPI_DISABLED);
+	#endif
+	#if SDL_VERSION_ATLEAST(2, 0, 2)
 	NANX_CONSTANT_STRING(target, SDL_HINT_MAC_CTRL_CLICK_EMULATE_RIGHT_CLICK);
 	NANX_CONSTANT_STRING(target, SDL_HINT_VIDEO_WIN_D3DCOMPILER);
 	NANX_CONSTANT_STRING(target, SDL_HINT_VIDEO_WINDOW_SHARE_PIXEL_FORMAT);
+	#endif
+	#if SDL_VERSION_ATLEAST(2, 0, 3)
 	NANX_CONSTANT_STRING(target, SDL_HINT_WINRT_PRIVACY_POLICY_URL);
 	NANX_CONSTANT_STRING(target, SDL_HINT_WINRT_PRIVACY_POLICY_LABEL);
 	NANX_CONSTANT_STRING(target, SDL_HINT_WINRT_HANDLE_BACK_BUTTON);
+	#endif
+	#if SDL_VERSION_ATLEAST(2, 0, 2)
 	NANX_CONSTANT_STRING(target, SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES);
-	//NANX_CONSTANT_STRING(target, SDL_HINT_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION);
-	//NANX_CONSTANT_STRING(target, SDL_HINT_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION);
-	//NANX_CONSTANT_STRING(target, SDL_HINT_IME_INTERNAL_EDITING);
-	//NANX_CONSTANT_STRING(target, SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH);
-	//NANX_CONSTANT_STRING(target, SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT);
-	//NANX_CONSTANT_STRING(target, SDL_HINT_NO_SIGNAL_HANDLERS);
+	#endif
+	#if SDL_VERSION_ATLEAST(2, 0, 4)
+	NANX_CONSTANT_STRING(target, SDL_HINT_MAC_BACKGROUND_APP);
+	NANX_CONSTANT_STRING(target, SDL_HINT_ANDROID_APK_EXPANSION_MAIN_FILE_VERSION);
+	NANX_CONSTANT_STRING(target, SDL_HINT_ANDROID_APK_EXPANSION_PATCH_FILE_VERSION);
+	NANX_CONSTANT_STRING(target, SDL_HINT_IME_INTERNAL_EDITING);
+	NANX_CONSTANT_STRING(target, SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH);
+	NANX_CONSTANT_STRING(target, SDL_HINT_EMSCRIPTEN_KEYBOARD_ELEMENT);
+	NANX_CONSTANT_STRING(target, SDL_HINT_NO_SIGNAL_HANDLERS);
+	NANX_CONSTANT_STRING(target, SDL_HINT_WINDOWS_NO_CLOSE_ON_ALT_F4);
+	#endif
+	#if SDL_VERSION_ATLEAST(2, 0, 5)
+	NANX_CONSTANT_STRING(target, SDL_HINT_BMP_SAVE_LEGACY_FORMAT);
+	NANX_CONSTANT_STRING(target, SDL_HINT_WINDOWS_DISABLE_THREAD_NAMING);
+	NANX_CONSTANT_STRING(target, SDL_HINT_RPI_VIDEO_LAYER);
+	#endif
 
 	// SDL_HintPriority
 	v8::Local<v8::Object> HintPriority = Nan::New<v8::Object>();
@@ -2309,6 +2391,9 @@ NAN_MODULE_INIT(init)
 	NANX_EXPORT_APPLY(target, SDL_SetHintWithPriority);
 	NANX_EXPORT_APPLY(target, SDL_SetHint);
 	NANX_EXPORT_APPLY(target, SDL_GetHint);
+	#if SDL_VERSION_ATLEAST(2, 0, 5)
+	NANX_EXPORT_APPLY(target, SDL_GetHintBoolean);
+	#endif
 	NANX_EXPORT_APPLY(target, SDL_ClearHints);
 
 	// SDL_joystick.h
@@ -2708,6 +2793,12 @@ NAN_MODULE_INIT(init)
 	NANX_CONSTANT(target, SDL_PIXELFORMAT_ABGR8888);
 	NANX_CONSTANT(target, SDL_PIXELFORMAT_BGRA8888);
 	NANX_CONSTANT(target, SDL_PIXELFORMAT_ARGB2101010);
+	#if SDL_VERSION_ATLEAST(2, 0, 5)
+	NANX_CONSTANT(target, SDL_PIXELFORMAT_RGBA32);
+	NANX_CONSTANT(target, SDL_PIXELFORMAT_ARGB32);
+	NANX_CONSTANT(target, SDL_PIXELFORMAT_BGRA32);
+	NANX_CONSTANT(target, SDL_PIXELFORMAT_ABGR32);
+	#endif
 	NANX_CONSTANT(target, SDL_PIXELFORMAT_YV12);
 	NANX_CONSTANT(target, SDL_PIXELFORMAT_IYUV);
 	NANX_CONSTANT(target, SDL_PIXELFORMAT_YUY2);
@@ -2821,6 +2912,10 @@ NAN_MODULE_INIT(init)
 	// TODO: NANX_EXPORT_APPLY(target, SDL_GetRenderTarget);
 	NANX_EXPORT_APPLY(target, SDL_RenderSetLogicalSize);
 	// TODO: NANX_EXPORT_APPLY(target, SDL_RenderGetLogicalSize);
+	#if SDL_VERSION_ATLEAST(2, 0, 5)
+	// TODO: NANX_EXPORT_APPLY(target, SDL_RenderSetIntegerScale);
+	// TODO: NANX_EXPORT_APPLY(target, SDL_RenderGetIntegerScale);
+	#endif
 	NANX_EXPORT_APPLY(target, SDL_RenderSetViewport);
 	NANX_EXPORT_APPLY(target, SDL_RenderGetViewport);
 	NANX_EXPORT_APPLY(target, SDL_RenderSetClipRect);
@@ -2880,7 +2975,13 @@ NAN_MODULE_INIT(init)
 	// SDL_surface.h
 
 	NANX_EXPORT_APPLY(target, SDL_CreateRGBSurface);
+	#if SDL_VERSION_ATLEAST(2, 0, 5)
+	// TODO: NANX_EXPORT_APPLY(target, SDL_CreateRGBSurfaceWithFormat);
+	#endif
 	NANX_EXPORT_APPLY(target, SDL_CreateRGBSurfaceFrom);
+	#if SDL_VERSION_ATLEAST(2, 0, 5)
+	// TODO: NANX_EXPORT_APPLY(target, SDL_CreateRGBSurfaceWithFormatFrom);
+	#endif
 	NANX_EXPORT_APPLY(target, SDL_FreeSurface);
 	NANX_EXPORT_APPLY(target, SDL_LoadBMP);
 	NANX_EXPORT_APPLY(target, SDL_SaveBMP);
@@ -2961,6 +3062,17 @@ NAN_MODULE_INIT(init)
 	NANX_CONSTANT(WindowFlags, SDL_WINDOW_MOUSE_FOCUS);
 	NANX_CONSTANT(WindowFlags, SDL_WINDOW_FULLSCREEN_DESKTOP);
 	NANX_CONSTANT(WindowFlags, SDL_WINDOW_FOREIGN);
+	#if SDL_VERSION_ATLEAST(2, 0, 4)
+	NANX_CONSTANT(WindowFlags, SDL_WINDOW_ALLOW_HIGHDPI);
+	NANX_CONSTANT(WindowFlags, SDL_WINDOW_MOUSE_CAPTURE);
+	#endif
+	#if SDL_VERSION_ATLEAST(2, 0, 5)
+	NANX_CONSTANT(WindowFlags, SDL_WINDOW_ALWAYS_ON_TOP);
+	NANX_CONSTANT(WindowFlags, SDL_WINDOW_SKIP_TASKBAR);
+	NANX_CONSTANT(WindowFlags, SDL_WINDOW_UTILITY);
+	NANX_CONSTANT(WindowFlags, SDL_WINDOW_TOOLTIP);
+	NANX_CONSTANT(WindowFlags, SDL_WINDOW_POPUP_MENU);
+	#endif
 
 	NANX_CONSTANT(target, SDL_WINDOWPOS_UNDEFINED);
 	NANX_CONSTANT(target, SDL_WINDOWPOS_CENTERED);
@@ -2982,7 +3094,11 @@ NAN_MODULE_INIT(init)
 	NANX_CONSTANT(WindowEventID, SDL_WINDOWEVENT_LEAVE);
 	NANX_CONSTANT(WindowEventID, SDL_WINDOWEVENT_FOCUS_GAINED);
 	NANX_CONSTANT(WindowEventID, SDL_WINDOWEVENT_FOCUS_LOST);
-    NANX_CONSTANT(WindowEventID, SDL_WINDOWEVENT_CLOSE);
+	NANX_CONSTANT(WindowEventID, SDL_WINDOWEVENT_CLOSE);
+	#if SDL_VERSION_ATLEAST(2, 0, 5)
+	NANX_CONSTANT(WindowEventID, SDL_WINDOWEVENT_TAKE_FOCUS);
+	NANX_CONSTANT(WindowEventID, SDL_WINDOWEVENT_HIT_TEST);
+	#endif
 
 	// SDL_GLattr
 	v8::Local<v8::Object> GLattr = Nan::New<v8::Object>();
@@ -3034,6 +3150,12 @@ NAN_MODULE_INIT(init)
 	NANX_EXPORT_APPLY(target, SDL_GetNumVideoDisplays);
 	NANX_EXPORT_APPLY(target, SDL_GetDisplayName);
 	NANX_EXPORT_APPLY(target, SDL_GetDisplayBounds);
+	#if SDL_VERSION_ATLEAST(2, 0, 4)
+	// TODO: NANX_EXPORT_APPLY(target, SDL_GetDisplayDPI);
+	#endif
+	#if SDL_VERSION_ATLEAST(2, 0, 5)
+	// TODO: NANX_EXPORT_APPLY(target, SDL_GetDisplayUsableBounds);
+	#endif
 	NANX_EXPORT_APPLY(target, SDL_GetCurrentDisplayMode);
 	NANX_EXPORT_APPLY(target, SDL_GetWindowDisplayIndex);
 	NANX_EXPORT_APPLY(target, SDL_GetWindowPixelFormat);

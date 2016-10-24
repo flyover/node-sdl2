@@ -1,27 +1,27 @@
 /**
- * Copyright (c) Flyover Games, LLC.  All rights reserved. 
- *  
- * Permission is hereby granted, free of charge, to any person 
- * obtaining a copy of this software and associated 
- * documentation files (the "Software"), to deal in the Software 
- * without restriction, including without limitation the rights 
- * to use, copy, modify, merge, publish, distribute, sublicense, 
- * and/or sell copies of the Software, and to permit persons to 
- * whom the Software is furnished to do so, subject to the 
- * following conditions: 
- *  
- * The above copyright notice and this permission notice shall 
- * be included in all copies or substantial portions of the 
- * Software. 
- *  
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY 
- * KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE 
- * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR 
- * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
- * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR 
- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
- * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+ * Copyright (c) Flyover Games, LLC.  All rights reserved.
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated
+ * documentation files (the "Software"), to deal in the Software
+ * without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to
+ * whom the Software is furnished to do so, subject to the
+ * following conditions:
+ *
+ * The above copyright notice and this permission notice shall
+ * be included in all copies or substantial portions of the
+ * Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+ * KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+ * COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+ * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+ * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
 #ifndef _NODE_SDL2_H_
@@ -584,18 +584,18 @@ private:
 	NANX_MEMBER_UINT32(::Uint32, format)
 	NANX_MEMBER_UINT32(::Uint32, BitsPerPixel)
 	NANX_MEMBER_UINT32(::Uint32, BytesPerPixel)
-	NANX_MEMBER_UINT32(::Uint8,  Rmask)
-	NANX_MEMBER_UINT32(::Uint8,  Gmask)
-	NANX_MEMBER_UINT32(::Uint8,  Bmask)
-	NANX_MEMBER_UINT32(::Uint8,  Amask)
-	NANX_MEMBER_UINT32(::Uint8,  Rloss)
-	NANX_MEMBER_UINT32(::Uint8,  Gloss)
-	NANX_MEMBER_UINT32(::Uint8,  Bloss)
-	NANX_MEMBER_UINT32(::Uint8,  Aloss)
-	NANX_MEMBER_UINT32(::Uint8,  Rshift)
-	NANX_MEMBER_UINT32(::Uint8,  Gshift)
-	NANX_MEMBER_UINT32(::Uint8,  Bshift)
-	NANX_MEMBER_UINT32(::Uint8,  Ashift)
+	NANX_MEMBER_UINT32(::Uint8, Rmask)
+	NANX_MEMBER_UINT32(::Uint8, Gmask)
+	NANX_MEMBER_UINT32(::Uint8, Bmask)
+	NANX_MEMBER_UINT32(::Uint8, Amask)
+	NANX_MEMBER_UINT32(::Uint8, Rloss)
+	NANX_MEMBER_UINT32(::Uint8, Gloss)
+	NANX_MEMBER_UINT32(::Uint8, Bloss)
+	NANX_MEMBER_UINT32(::Uint8, Aloss)
+	NANX_MEMBER_UINT32(::Uint8, Rshift)
+	NANX_MEMBER_UINT32(::Uint8, Gshift)
+	NANX_MEMBER_UINT32(::Uint8, Bshift)
+	NANX_MEMBER_UINT32(::Uint8, Ashift)
 };
 
 // wrap SDL_RWops pointer
