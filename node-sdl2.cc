@@ -367,9 +367,9 @@ NANX_EXPORT(SDL_PollEvent)
 		evt->Set(NANX_SYMBOL("y"), Nan::New(event.button.y));
 		{
 			int w = 0, h = 0;
-			SDL_GetWindowSize(SDL_GetWindowFromID(event.motion.windowID), &w, &h);
-			evt->Set(NANX_SYMBOL("nx"), Nan::New((2.0f * float(event.motion.x) / w) - 1.0f));
-			evt->Set(NANX_SYMBOL("ny"), Nan::New(1.0f - (2.0f * float(event.motion.y) / h)));
+			SDL_GetWindowSize(SDL_GetWindowFromID(event.button.windowID), &w, &h);
+			evt->Set(NANX_SYMBOL("nx"), Nan::New((2.0f * float(event.button.x) / w) - 1.0f));
+			evt->Set(NANX_SYMBOL("ny"), Nan::New(1.0f - (2.0f * float(event.button.y) / h)));
 		}
 		break;
 	case SDL_MOUSEWHEEL:
